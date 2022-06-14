@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #container1
+    {
+        height:150px;
+        width:90%;
+        border:1px solid black;
+        margin:auto;
+        display: flex;
+        justify-content: space-between;
+        background-color: rgba(0,0,0,0.5);
+        margin:18px;
+
+    }
+    .small
+    {
+        height:150px;
+        width:18%;
+        /* border:1px solid black; */
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        font-family: sans-serif;
+    }
+    h3{
+        margin-top: 60px;
+        font-size: 23px;
+        font-family: sans-serif;
+    }
+    #img2
+    {
+        height:150px;
+        width:190px;
+    }
+    #h2
+    {
+        margin-right: 20px;
+    }
+    #container
+    {
+        margin:auto;
+    }
+    #btn
+    {
+        cursor:pointer;
+        font-size:23px ;
+    }
+</style>
+<body>
+    <button>
+        <a href="index.html">Add Student</a>
+    </button>
+<div id="container">
+    <!-- <div class="small" id="image"></div>
+    <div class="small" id="name"></div>
+    <div class="small" id="course"></div>
+    <div class="small" id="unit"></div>
+    <div class="small" id="batch"></div> -->
+</div>
+<button>
+    <a href="trash.html">go to trash</a>
+</button>
+</body>
+</html>
+<script>
+    data=JSON.parse(localStorage.getItem("details"))
+    console.log(data)
+    // let div=document.querySelector("#container")
+    // div.innerHTML=null;
+   data.forEach(function(ele,index){
+    //    let name=document.querySelector("#name")
+    //    name.innerText=ele.name;
+    //    let course=document.querySelector("#course")
+    //    course.innerText=ele.course;
+    //    let unit=document.querySelector("#unit")
+    //    unit.innerText=ele.unit;
+    //    let batch=document.querySelector("#batch")
+    //    batch.innerText=ele.batch;
+    //    let image1=document.createElement("img")
+    //    image1.src=ele.image;
+    //    image1.setAttribute("id","img2")
+    //    document.querySelector("#image").append(image1)
+        let name=document.createElement("h3")
+        name.innerText=ele.name;
+        name.setAttribute("class","h3")
+        let course=document.createElement("h3")
+        course.innerText=ele.course;
+        course.setAttribute("class","h3")
+
+        let unit=document.createElement("h3")
+        unit.innerText=ele.unit;
+        unit.setAttribute("class","h3")
+
+        let batch=document.createElement("h3");
+        batch.innerText=ele.batch;
+        batch.setAttribute("class","h3")
+        batch.setAttribute("id","h2")
+
+        let image1=document.createElement("img")
+       image1.src=ele.image;
+       image1.setAttribute("id","img2")
+       var btn = document.createElement("button");
+       btn.setAttribute("id","btn")
+        btn.innerText = "Remove";
+        btn.addEventListener("click", function () {
+            removeItem(ele, index);
+        });
+    //    document.querySelector("#image").append(image1)
+    
+    
+    div=document.createElement("div");
+    div.setAttribute("id","container1")
+    div.append(image1,name,course,unit,batch,btn)
+    document.querySelector("#container").append(div)
+
+
+
+   })
+   function removeItem(ele, index) {
+        // console.log(elem, index);
+        var arr=JSON.parse(localStorage.getItem("trash")) ||[];
+        arr.push(ele)
+        localStorage.setItem("trash",JSON.stringify(arr))
+        data.splice(index, 1);
+        // console.log(cartData);
+        localStorage.setItem("details", JSON.stringify(data));
+        window.location.reload();
+    }
+    
+</script>

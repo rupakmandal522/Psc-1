@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .data{
+        width: 550px;
+        border: 1px solid black;
+        height: 27px;
+        font-size: 20px;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-family: sans-serif;
+    }
+
+    #count {
+        background-color: black;
+        font-size: 20px;
+        font-family: sans-serif;
+
+    }
+</style>
+
+<body>
+    <button>
+        <a href="dashboard.html">Dashboard</a>
+    </button>
+    <div id="count">
+        Number of student=
+    </div>
+
+    <form onsubmit="addstudent(event)" id="student_data">
+        <h1>Add Data</h1>
+        <input type="text" id="name" class="data" placeholder="Enter Name" /><br><br>
+        <input type="text" id="course" class="data" placeholder="course"><br><br>
+        <input type="text" id="unit" class="data" placeholder="unit"><br><br>
+        <input type="text" id="image" class="data" placeholder="image"><br><br>
+        <input type="text" id="batch" class="data" placeholder="batch"><br><br>
+        <input type="submit">
+    </form>
+</body>
+
+</html>
+<script>
+    function addstudent(e) {
+        let form = document.querySelector("#student_data");
+        e.preventDefault();
+        name = form.name.value;
+        course = form.course.value;
+        unit = form.unit.value;
+        image = form.image.value;
+        batch = form.batch.value;
+        function student(name, course, unit, image, batch) {
+            this.name = name;
+            this.course = course;
+            this.unit = unit;
+            this.image = image;
+            this.batch = `Fw-Web_${batch}`;
+        }
+        var student = new student(name, course, unit, image, batch)
+        var arr = JSON.parse(localStorage.getItem("details")) || [];
+        arr.push(student);
+        localStorage.setItem("details", JSON.stringify(arr))
+        location.reload();
+
+    }
+    function calculate() {
+
+        data = JSON.parse(localStorage.getItem("details"))
+
+
+        var obj = {};
+
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].batch in obj) {
+                obj[data[i].batch] += 1;
+            }
+            else {
+                obj[data[i].batch] = 1;
+
+            }
+        }
+        var arr = [];
+        for (key in obj) {
+            let num = (key + " :" + obj[key])
+            arr.push(num)
+
+        }
+        var stu = arr.join("----");
+        document.querySelector("#count").append(stu)
+
+
+
+    }
+    calculate()
+</script>
